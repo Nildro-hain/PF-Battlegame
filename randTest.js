@@ -15,6 +15,7 @@ for (let i = 1; i < 3; i++) {
 printGrid(grid);
 
 while (ships > 0) {
+    rs.setDefaultOptions({limit: ['0', '1', '2']});
     let x = rs.question('Enter your x-coordinate: '); 
         console.log('You chose: ' + x);
     let y = rs.question('Enter your y-coordinate: ');
@@ -22,10 +23,15 @@ while (ships > 0) {
     
     if (attack(x, y, grid)) {
         ships--;
+        console.log('You hit one!');
+    } else {
+        console.log('You missed!');
     }
     printGrid(grid);
 }
-
+if (ships == 0) {
+    console.log('Victory!');
+}
 
 function createGrid(size) {
     let grid = [];
@@ -45,7 +51,7 @@ function printGrid(grid) {
       var rowStr = i + ' ';
       for (let cell of grid[i]) {
         if (cell == 'X') {
-            rowStr += 'n ';
+            rowStr += 'O ';
         } else {
           rowStr += cell + ' ';
             }
@@ -80,7 +86,9 @@ function getRandomInt(max) {
 function attack(x, y, grid) {
     if (grid[y][x] == 'O') {
         grid[y][x] = 'x';
+        return false;
     } else {
-        grid[y][x] = 'y';
+        grid[y][x] = '!';
+        return true;
     }
 }
